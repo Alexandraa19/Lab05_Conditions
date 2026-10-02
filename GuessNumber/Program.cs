@@ -168,70 +168,233 @@
 //         break;
 // }
 
-Random random = new Random();
-int secret = random.Next(1, 101);
+// Random random = new Random();
+// int secret = random.Next(1, 101);
 
-int attempts = 0;
-bool guessed = false;
+// int attempts = 0;
+// bool guessed = false;
 
-Console.WriteLine("Угадай число (1-100)");
-Console.WriteLine("Я загадал число. Попробуй угадать!");
+// Console.WriteLine("Угадай число (1-100)");
+// Console.WriteLine("Я загадал число. Попробуй угадать!");
 
-while (!guessed)
+// while (!guessed)
+// {
+//     Console.Write("Введите число: ");
+//     string input = Console.ReadLine()!;
+
+//     if (!int.TryParse(input, out int guess))
+//     {
+//         Console.WriteLine("!!! Введите целое число!");
+//         continue;
+//     }
+
+//     if (guess < 1 || guess > 100)
+//     {
+//         Console.WriteLine("!!! Число должно быть от 1 до 100!");
+//         continue;
+//     }
+
+//     attempts++;
+
+//     if (guess < secret)
+//     {
+//         int diff = secret - guess;
+//         string hint = GetHint(diff);
+//         Console.WriteLine($"↑ Больше! {hint}\n");
+//     }
+//     else if (guess > secret)
+//     {
+//         int diff = guess - secret;
+//         string hint = GetHint(diff);
+//         Console.WriteLine($"↓ Меньше! {hint}\n");
+//     }
+//     else
+//     {
+//         guessed = true;
+//     }
+// }
+// string result = attempts <= 7
+//     ? $"Отличный результат! Всего {attempts} попыток."
+//     : $"Число найдено за {attempts} попыток. Можно лучше!";
+
+// Console.WriteLine($"Правильно! Загаданное число: {secret}");
+// Console.WriteLine($"{result}");
+
+
+// static string GetHint(int diff)
+// {
+//     switch (diff)
+//     {
+//         case <= 3:
+//             return "Горячо!";
+//         case <= 10:
+//             return "Тепло.";
+//         case <= 25:
+//             return "Прохладно.";
+//         default:
+//             return "Холодно.";
+//     }
+// }
+using System;
+using System.Globalization;
+
+Console.WriteLine("Лабораторная работа №5. Самостоятельные задания ");
+Console.WriteLine("Выберите задание:");
+Console.WriteLine("1 — Задание 1. Проверка пароля");
+Console.WriteLine("2 — Задание 2. Роскомнадзор");
+Console.WriteLine("3 — Задание 3. Простой Калькулятор");
+Console.WriteLine("4 — Задание 4. Только положительные");
+Console.WriteLine("5 — Задание 5. Путешествие в Тёмный Лабиринт");
+Console.Write("ваш выбор: ");
+
+string menu = Console.ReadLine()!;
+
+switch (menu)
 {
-    Console.Write("Введите число: ");
-    string input = Console.ReadLine()!;
+    case "1":
+        RunPasswordCheck();
+        break;
+    case "2":
+        RunRknCheck();
+        break;
+    case "3":
+        RunCalculator();
+        break;
+    case "4":
+        RunPositivesSum();
+        break;
+    case "5":
+        RunDarkLabyrinth();
+        break;
+    default:
+        Console.WriteLine("нету такого.");
+        break;
+}
 
-    if (!int.TryParse(input, out int guess))
+
+static void RunPasswordCheck()
+{
+    Console.WriteLine("\nЗадание 1. Проверка пароля ");
+    Console.Write("Введите пароль: ");
+    string password = Console.ReadLine()!;
+    Console.Write("Подтвердите пароль: ");
+    string confirm = Console.ReadLine()!;
+
+    if (password == confirm)
+        Console.WriteLine("Пароль принят");
+    else
+        Console.WriteLine("Пароль не принят");
+}
+
+
+static void RunRknCheck()
+{
+    Console.WriteLine("\n Задание 2. Роскомнадзор ");
+    Console.Write("Введите возраст: ");
+    int age = int.Parse(Console.ReadLine()!);
+
+    if (age >= 18)
+        Console.WriteLine("Доступ разрешён");
+    else
+        Console.WriteLine("Доступ запрещён");
+}
+
+static void RunCalculator()
+{
+    Console.WriteLine("\nЗадание 3. Простой Калькулятор");
+
+    Console.Write("Введите первое число: ");
+    double a = double.Parse(Console.ReadLine()!, CultureInfo.InvariantCulture);
+
+    Console.Write("Введите второе число: ");
+    double b = double.Parse(Console.ReadLine()!, CultureInfo.InvariantCulture);
+
+    Console.Write("Введите операцию (+, -, *, /): ");
+    string op = Console.ReadLine()!;
+    switch (op)
     {
-        Console.WriteLine("!!! Введите целое число!");
-        continue;
+        case "+":
+            Console.WriteLine($"{a} + {b} = {a + b}");
+            break;
+        case "-":
+            Console.WriteLine($"{a} - {b} = {a - b}");
+            break;
+        case "*":
+            Console.WriteLine($"{a} * {b} = {a * b}");
+            break;
+        case "/":
+            if (b != 0)
+                Console.WriteLine($"{a} / {b} = {a / b}");
+            else
+                Console.WriteLine("Деление на ноль невозможно!");
+            break;
+        default:
+            Console.WriteLine("Неизвестная операция");
+            break;
+    }
+}
+
+static void RunPositivesSum()
+{
+    Console.WriteLine("\n Задание 4. Только положительные ");
+    int sum = 0;
+
+    for (int i = 1; i <= 3; i++)
+    {
+        Console.Write($"Введите число {i}: ");
+        int num = int.Parse(Console.ReadLine()!);
+        if (num > 0)
+            sum += num;
     }
 
-    if (guess < 1 || guess > 100)
-    {
-        Console.WriteLine("!!! Число должно быть от 1 до 100!");
-        continue;
-    }
+    Console.WriteLine($"Сумма положительных: {sum}");
+}
 
-    attempts++;
+static void RunDarkLabyrinth()
+{
+    Console.WriteLine("\n Задание 5. Путешествие в Тёмный Лабиринт ");
+    Console.WriteLine("Вы стоите перед первой дверью.");
+    Console.WriteLine("A — Войти в комнату с драконом");
+    Console.WriteLine("B — Пойти по тёмному коридору");
+    Console.Write("Ваш выбор (A/B): ");
+    string path = Console.ReadLine()!.ToUpper();
 
-    if (guess < secret)
+    if (path == "A")
     {
-        int diff = secret - guess;
-        string hint = GetHint(diff);
-        Console.WriteLine($"↑ Больше! {hint}\n");
+        Console.WriteLine("\nДракон загадывает загадку:");
+        Console.WriteLine("\"Кто не дышит, но живёт; хоть не нужно — много пьёт;");
+        Console.WriteLine(" и в жизни, и в смерти тело как лёд.\"");
+        Console.Write("Ваш ответ: ");
+        string answer = Console.ReadLine()!.ToLower();
+
+        if (answer == "рыба")
+            Console.WriteLine("+ Дракон открывает дверь. Вы прошли дальше!");
+        else
+            Console.WriteLine("- Дракон съедает вас. Игра окончена.");
     }
-    else if (guess > secret)
+    else if (path == "B")
     {
-        int diff = guess - secret;
-        string hint = GetHint(diff);
-        Console.WriteLine($"↓ Меньше! {hint}\n");
+        Console.WriteLine("\nТёмная комната с двумя дверями:");
+        Console.WriteLine("1 — Дверь с сокровищами");
+        Console.WriteLine("2 — Дверь с ловушкой");
+        Console.Write("Ваш выбор (1/2): ");
+        string door = Console.ReadLine()!;
+
+        switch (door)
+        {
+            case "1":
+                Console.WriteLine("+ Вы нашли сокровища Dungeon Master’а!");
+                break;
+            case "2":
+                Console.WriteLine("- Ловушка с ядовитыми шипами. Игра окончена.");
+                break;
+            default:
+                Console.WriteLine("Неизвестная дверь.");
+                break;
+        }
     }
     else
     {
-        guessed = true;
-    }
-}
-string result = attempts <= 7
-    ? $"Отличный результат! Всего {attempts} попыток."
-    : $"Число найдено за {attempts} попыток. Можно лучше!";
-
-Console.WriteLine($"Правильно! Загаданное число: {secret}");
-Console.WriteLine($"{result}");
-
-
-static string GetHint(int diff)
-{
-    switch (diff)
-    {
-        case <= 3:
-            return "Горячо!";
-        case <= 10:
-            return "Тепло.";
-        case <= 25:
-            return "Прохладно.";
-        default:
-            return "Холодно.";
+        Console.WriteLine("Неизвестный путь.");
     }
 }
